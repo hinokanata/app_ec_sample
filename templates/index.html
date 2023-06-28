@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        h3 {
+            color: #333333;
+            font-size: 24px;
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        p {
+            color: red;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 10px;
+        }
+        
+        p.success-msg {
+            color: #0099cc;
+        }
+        
+        form {
+            max-width: 300px;
+            margin: 20px auto;
+            padding: 35px;
+            background-color: #ffffff;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+        }
+        
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        button[type="submit"] {
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        
+        a {
+            color: #666666;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+        }
+        
+        a:hover {
+            color: #0099cc;
+        }
+    </style>
+</head>
+<body>
+    <h3>ログイン</h3>
+    {%  if error != null %}
+        <p style="color:red">{{error}}</p>
+    {% endif %}
+    {%  if msg != null %}
+        <p style="color:blue">{{msg}}</p>
+    {% endif %}
+    <form action="{{url_for('login')}}" method="post">
+        ユーザ名:<input type="text" name="username" value="{{data.user_name if data is defined else ''}}"><br>
+        パスワード:<input type="password" name="password" value="{{data.password if data is defined else ''}}"><br>
+        <button type="submit">ログイン</button>
+    </form>
+    <a href="{{url_for('register_form')}}">新規の方はこちら</a>
+    </body>
+</html>

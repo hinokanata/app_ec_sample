@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お問い合わせ</title>
+    <style>
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        h3 {
+            color: black;
+            text-align: center;
+        }
+        
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 35px;
+            background-color: #ffffff;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+        }
+        
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        button[type="submit"] {
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+        }
+        
+        a {
+            color: #666666;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
+        h2 {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h3>お問い合わせ</h3>
+    <form action="{{url_for('send')}}" method="post">
+        宛先:（下記のメールアドレスをご確認ください。）<input type="text" name="to"><br>
+        件名:<input type="text" name="subject"><br>
+        お問い合わせ内容:<input type="text" name="body"><br>
+        <button type="submit">送信</button>
+        <a href="{{url_for('mypage')}}">戻る</a>
+        <h2>ご確認ください</h2>
+        <p>商品についてのご質問はこちらまで k.hino.sys22@morijyobi.ac.jp</p>
+        <p>商品の返品交換についてはこちらまで k.hino.sys22@morijyobi.ac.jp</p>
+
+    </form>
+</body>
+</html>

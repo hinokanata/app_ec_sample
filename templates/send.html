@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お問い合わせ</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        h3 {
+            color: #ffcc00;
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        p {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        
+        a {
+            color: #ffffff;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        a:hover {
+            color: #ffcc00;
+        }
+    </style>
+</head>
+<body>
+    <h3>お問い合わせ</h3>
+    <p>メールが送信されました。</p>
+    <a href="{{url_for('index')}}">戻る</a>
+</body>
+</html>
