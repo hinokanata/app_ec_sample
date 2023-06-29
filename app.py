@@ -5,7 +5,6 @@ import mail
 
 app = Flask(__name__)
 app.secret_key = ''.join(random.choices(string.ascii_letters, k=256))
-cart_items = []
 
 @app.route('/', methods=['GET'])
 def index():
@@ -88,17 +87,6 @@ def send():
 @app.route('/send', methods=['GET'])
 def navigateSend():
     return render_template('send.html')
-
-@app.route('/cart', methods=['GET', 'POST'])
-def cart():
-    if request.method == 'POST':
-        product_id = request.form.get('product_id')
-        add_to_cart(product_id)
-    return render_template('cart.html', cart_items=cart_items)
-
-def add_to_cart(product_id):
-    # 商品IDをカートに追加する処理を実装
-    cart_items.append(product_id)
 
 if __name__ == '__main__':
     app.run(debug=True)
