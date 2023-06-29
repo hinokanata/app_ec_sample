@@ -98,6 +98,17 @@
         ul {
             text-align: center;
         }
+
+        .cart-link {
+            position: absolute;
+            top: 30px;
+            right: 10px;
+          }
+      
+        .cart-link img {
+            width: 50px; 
+            height: auto; 
+          }
     </style>
 </head>
 <body>
@@ -106,62 +117,33 @@
         <nav>
             <ul>
                 <li><a href="{{url_for('mypage')}}">ホーム</a></li>
-                <li><a href="#">カート</a></li>
-                <li><a href="#">カテゴリー3</a></li>
+                <li><a href="{{url_for('login')}}">会員登録・ログイン</a></li>
+                <li><a href="{{url_for('add_product')}}">商品登録</a></li>
                 <li><a href="{{url_for('indexmail')}}">お問い合わせ</a></li>
-                <li><a href="#">カテゴリー4</a></li>
+                <li><a href="{{url_for('list_products')}}">一覧</a></li>
+                <a href="{{url_for('cart')}}" class="cart-link">
+                    <img src="static/img/cart.jpg" alt="写真">
+                </a>
             </ul>
+
         </nav>
     </header>
     <main>
         <section>
             <h2>2023 SUMMER</h2>
             <div class="product">
-                <img src="static/img/1_0_1.jpg" alt="Tシャツ">
-                <h3>Tシャツ</h3>
-                <p>商品の説明や詳細など</p>
-                <button>詳細を見る</button>
-                <button onclick="">カートに追加</button>
-            </div>
-            <div class="product">
-                <img src="product2.jpg" alt="商品2">
-                <h3>商品2</h3>
-                <p>商品の説明や詳細など</p>
-                <button>詳細を見る</button>
-                <button onclick="">カートに追加</button>
-            </div>
-            <div class="product">
-                <img src="product3.jpg" alt="商品3">
-                <h3>商品3</h3>
-                <p>商品の説明や詳細など</p>
-                <button>詳細を見る</button>
-                <button onclick="">カートに追加</button>
-            </div>
-        </section>
-        <section>
-            <h2>新着商品</h2>
-            <div class="product">
-                <img src="product4.jpg" alt="商品4">
-                <h3>商品4</h3>
-                <p>商品の説明や詳細など</p>
-                <button>詳細を見る</button>
-                <button onclick="">カートに追加</button>
-            </div>
-            <div class="product">
-                <img src="product5.jpg" alt="商品5">
-                <h3>商品5</h3>
-                <p>商品の説明や詳細など</p>
-                <button>詳細を見る</button>
-                <button onclick="">カートに追加</button>
-            </div>
-            <div class="product">
-                <img src="product6.jpg" alt="商品6">
-                <h3>商品6</h3>
-                <p>商品の説明や詳細など</p>
-                <button>詳細を見る</button>
-                <button onclick="">カートに追加</button>
-            </div>
-        </section>
+                {% for product in products %}
+                <h2>{{ product[1] }}</h2>
+                <p>{{ product[2] }}</p>
+                <img src="{{ product[3] }}" alt="商品画像" width="200"><br><br>
+                {% endfor %}
+                <form action="{{ url_for('add_to_cart') }}" method="post">
+                    <input type="hidden" name="product_id" value="1">
+                    <form action="{{ url_for('add_to_cart') }}" method="post">
+                        <input type="hidden" name="product_id" value="1">
+                        <button type="submit">カートに追加</button>
+                    </form>
+                </section>
     </main>
     <footer>
         <p>&copy; 2023 ECサイト app_ec_sample</p>

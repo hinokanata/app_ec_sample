@@ -1,10 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-import db, string, random
+import db, string, random, sqlite3
 from datetime import timedelta
 import mail
 
 app = Flask(__name__)
 app.secret_key = ''.join(random.choices(string.ascii_letters, k=256))
+app.secret_key = 'your_secret_key'
+app.config['UPLOAD_FOLDER'] = 'static/uploads'
 
 @app.route('/', methods=['GET'])
 def index():
@@ -87,6 +89,59 @@ def send():
 @app.route('/send', methods=['GET'])
 def navigateSend():
     return render_template('send.html')
+
+@app.route('/add_to_cart', methods=['POST'])
+def add_to_cart():
+    product_id = request.form['product_id']
+    if 'cart' not in session:
+        session['cart'] = []
+    session['cart'].append(product_id)
+    return redirect(url_for('cart'))
+
+@app.route('/cart')
+def cart():
+    if 'cart' not in session:
+        session['cart'] = []
+    cart_items = session['cart']
+    return render_template('cart.html', cart_items=cart_items)
+
+@app.route('/remove_from_cart', methods=['POST'])
+def remove_from_cart():
+    product_id = request.form['product_id']
+    if 'cart' in session and product_id in session['cart']:
+        session['cart'].remove(product_id)
+    return redirect(url_for('cart'))
+
+@app.route('/add', methods=['GET', 'POST'])
+def add_product():
+    if request.method == 'POST':
+        name = request.form['name']
+        description = request.form['description']
+        image = request.form['image']
+        
+        # データベースに商品を追加
+        conn = sqlite3.connect('products.db')
+        c = conn.cursor()
+        c.execute('INSERT INTO products (name, description, image) VALUES (?, ?, ?)',
+                  (name, description, image))
+        conn.commit()
+        conn.close()
+        
+        return redirect(url_for('list_products'))
+    
+    return render_template('add_product.html')
+
+# 商品一覧表示のルート
+@app.route('/list_products')
+def list_products():
+    # データベースから商品を取得
+    conn = sqlite3.connect('products.db')
+    c = conn.cursor()
+    c.execute('SELECT * FROM products')
+    products = c.fetchall()
+    conn.close()
+    
+    return render_template('list_products.html', products=products)
 
 if __name__ == '__main__':
     app.run(debug=True)

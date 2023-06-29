@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品一覧</title>
+</head>
+<body>
+    <h1>商品一覧</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>商品名</th>
+            <th>説明</th>
+            <th>写真</th>
+        </tr>
+        {% for product in products %}
+        <tr>
+            <td>{{ product[0] }}</td>
+            <td>{{ product[1] }}</td>
+            <td>{{ product[2] }}</td>
+            <td><img src="{{ product[3] }}" alt="product image" height="100"></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

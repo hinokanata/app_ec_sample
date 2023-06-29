@@ -1,4 +1,4 @@
-import os, psycopg2, string, random, hashlib
+import os, psycopg2, string, random, hashlib, sqlite3
 
 def get_connection():
     url = os.environ['DATABASE_URL']
@@ -65,4 +65,18 @@ def login(user_name, password):
         connection.close()
         
     return flg
-            
+
+# データベースに接続
+conn = sqlite3.connect('products.db')
+c = conn.cursor()
+
+# テーブルの作成
+c.execute('''CREATE TABLE IF NOT EXISTS products
+                 (id SERIAL PRIMARY KEY,
+                 name TEXT NOT NULL,
+                 description TEXT NOT NULL,
+                 image_path TEXT NOT NULL)''')
+
+# コミットして接続を閉じる
+conn.commit()
+conn.close()
