@@ -3,25 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>商品一覧</title>
+    <title>Document</title>
 </head>
 <body>
-    <h1>商品一覧</h1>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>商品名</th>
-            <th>説明</th>
-            <th>写真</th>
-        </tr>
-        {% for product in products %}
-        <tr>
-            <td>{{ product[0] }}</td>
-            <td>{{ product[1] }}</td>
-            <td>{{ product[2] }}</td>
-            <td><img src="{{ product[3] }}" alt="product image" height="100"></td>
-        </tr>
-        {% endfor %}
+    <h1>一覧</h1>
+    <table class="table table-striped">
+      <thead>
+          <tr>
+              <th>タイトル</th>
+              <th>サイズ</th>
+              <th>説明</th>
+              <th>値段</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for book in books %}
+          <tr>
+              <td>{{ book[0] }}</td>
+              <td>{{ book[1] }}</td>
+              <td>{{ book[2] }}</td>
+              <td>{{ book[3] }}</td>
+          </tr>
+          {% endfor %}
+      </tbody>
     </table>
 </body>
 </html>

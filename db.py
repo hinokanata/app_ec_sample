@@ -1,5 +1,11 @@
 import os, psycopg2, string, random, hashlib, sqlite3
 
+
+connection = psycopg2.connect(user='postgres',
+                              password='0818',
+                              host='localhost',
+                              database='postgres')
+
 def get_connection():
     url = os.environ['DATABASE_URL']
     connection = psycopg2.connect(url)
@@ -28,7 +34,7 @@ def insert_user(user_name, password):
         cursor = connection.cursor()
         
         cursor.execute(sql, (user_name, hashed_password, salt))
-        count = cursor.rowcount #更新件数を取得
+        count = cursor.rowcount 
         connection.commit()
     
     except psycopg2.DatabaseError: 
@@ -66,17 +72,31 @@ def login(user_name, password):
         
     return flg
 
-# データベースに接続
-conn = sqlite3.connect('products.db')
-c = conn.cursor()
 
-# テーブルの作成
-c.execute('''CREATE TABLE IF NOT EXISTS products
-                 (id SERIAL PRIMARY KEY,
-                 name TEXT NOT NULL,
-                 description TEXT NOT NULL,
-                 image_path TEXT NOT NULL)''')
+def get_connection():
+	url = os.environ['DATABASE_URL']
+	connection = psycopg2.connect(url)
+	return connection
 
-# コミットして接続を閉じる
-conn.commit()
-conn.close()
+def select_all_books():
+    connection = get_connection()
+    cursor = connection.cursor()
+    
+    sql = 'SELECT title, author, publisher, pages FROM books_sample'
+    
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    
+    cursor.close()
+    connection.close()
+    return rows
+    
+def insert_book(title, author, publisher, pages):
+    connection = get_connection()
+    cursor = connection.cursor()
+    sql = 'INSERT INTO books_sample VALUES (default, %s, %s, %s, %s)'
+    
+    cursor.execute(sql, (title, author, publisher, pages))
+    connection.commit()
+    cursor.close()
+    connection.close()

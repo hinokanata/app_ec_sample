@@ -3,18 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>商品登録</title>
+    <title>Document</title>
 </head>
 <body>
-    <h1>商品登録</h1>
-    <form action="/add_product" method="post" enctype="multipart/form-data">
-        <label for="name">商品名:</label>
-        <input type="text" id="name" name="name"><br><br>
-        <label for="description">商品説明:</label>
-        <textarea id="description" name="description"></textarea><br><br>
-        <label for="image">商品画像:</label>
-        <input type="file" id="image" name="image"><br><br>
-        <input type="submit" value="登録">
+    <h1>登録</h1>
+    <form action="{{url_for('register_exee')}}" method="post">
+      タイトル：<input type="text" name="title"><br>
+      サイズ：<input type="text" name="author"><br>
+      説明：<input type="text" name="publisher"><br>
+      金額：<input type="number" name="pages"><br>
+      <button type="submit">登録</button>
     </form>
 </body>
 </html>

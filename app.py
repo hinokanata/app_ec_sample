@@ -90,6 +90,10 @@ def send():
 def navigateSend():
     return render_template('send.html')
 
+@app.route('/add_product')
+def add_product():
+    return render_template('add_product.html')
+
 @app.route('/add_to_cart', methods=['POST'])
 def add_to_cart():
     product_id = request.form['product_id']
@@ -112,36 +116,20 @@ def remove_from_cart():
         session['cart'].remove(product_id)
     return redirect(url_for('cart'))
 
-@app.route('/add', methods=['GET', 'POST'])
-def add_product():
-    if request.method == 'POST':
-        name = request.form['name']
-        description = request.form['description']
-        image = request.form['image']
-        
-        # データベースに商品を追加
-        conn = sqlite3.connect('products.db')
-        c = conn.cursor()
-        c.execute('INSERT INTO products (name, description, image) VALUES (?, ?, ?)',
-                  (name, description, image))
-        conn.commit()
-        conn.close()
-        
-        return redirect(url_for('list_products'))
+@app.route('/register_exee', methods=['POST'])
+def register_exee():
+    title = request.form.get('title')
+    author = request.form.get('author')
+    publisher = request.form.get('publisher')
+    pages = request.form.get('pages')
     
-    return render_template('add_product.html')
+    db.insert_book(title, author, publisher, pages)
+    
+    book_list = db.select_all_books()
+    
+    return render_template('list_products.html', books=book_list)
 
-# 商品一覧表示のルート
-@app.route('/list_products')
-def list_products():
-    # データベースから商品を取得
-    conn = sqlite3.connect('products.db')
-    c = conn.cursor()
-    c.execute('SELECT * FROM products')
-    products = c.fetchall()
-    conn.close()
-    
-    return render_template('list_products.html', products=products)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
