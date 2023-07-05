@@ -100,3 +100,12 @@ def insert_book(title, author, publisher, pages):
     connection.commit()
     cursor.close()
     connection.close()
+    
+def delete_book(book_id):
+    connection = get_connection()
+    cursor = connection.cursor()
+    sql = 'DELETE FROM books_sample WHERE id = %s'
+    cursor.execute(sql, (book_id,))
+    connection.commit()
+    cursor.close()
+    connection.close()

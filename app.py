@@ -17,8 +17,26 @@ def index():
     else :
         return render_template('index.html', msg=msg)
 
-@app.route('/', methods=['POST'])
+@app.route('/login', methods=['POST'])
 def login():
+    user_name = request.form.get('username')
+    password = request.form.get('password')
+    
+    if db.login(user_name, password):
+        session['user'] = True 
+        session.permanent = True
+        app.permanent_session_lifetime = timedelta(hours=1)
+        return redirect(url_for('customer'))
+    else :    
+        error = 'ログインに失敗しました。'
+        input_data ={
+            'user_name' : user_name,
+            'password' : password
+        }
+        return render_template('index.html', error=error, data=input_data)
+    
+@app.route('/adminlogin', methods=['POST'])
+def adminlogin():
     user_name = request.form.get('username')
     password = request.form.get('password')
     
@@ -33,8 +51,8 @@ def login():
             'user_name' : user_name,
             'password' : password
         }
-        return render_template('index.html', error=error, data=input_data)
-    
+        return render_template('admin.html', error=error, data=input_data)
+
 @app.route('/logout')
 def logout():
     session.pop('user',None)
@@ -50,6 +68,10 @@ def mypage():
 @app.route('/register')
 def register_form():
     return render_template('register.html')
+
+@app.route('/admin')
+def admin():
+    return render_template('admin.html')
 
 @app.route('/register_exe', methods=['POST'])
 def register_exe():
@@ -94,6 +116,10 @@ def navigateSend():
 def add_product():
     return render_template('add_product.html')
 
+@app.route('/customer')
+def customer():
+    return render_template('customer.html')
+
 @app.route('/add_to_cart', methods=['POST'])
 def add_to_cart():
     product_id = request.form['product_id']
@@ -127,8 +153,22 @@ def register_exee():
     
     book_list = db.select_all_books()
     
+    return render_template('list_products.html','list.html', books=book_list)
+
+@app.route('/list')
+def list():
+    book_list = db.select_all_books()
+    return render_template('list.html', books=book_list)
+
+@app.route('/list_products')
+def list_products():
+    book_list = db.select_all_books()
     return render_template('list_products.html', books=book_list)
 
+@app.route('/delete_product/<int:book_id>', methods=['POST'])
+def delete_product(book_id):
+    db.delete_book(book_id)
+    return redirect(url_for('list_products'))
 
 
 if __name__ == '__main__':

@@ -74,21 +74,18 @@
     </style>
 </head>
 <body>
-    <h3>ログイン</h3>
+    <h3>管理者用ログイン</h3>
     {%  if error != null %}
         <p style="color:red">{{error}}</p>
     {% endif %}
     {%  if msg != null %}
         <p style="color:blue">{{msg}}</p>
     {% endif %}
-    <form action="{{url_for('login')}}" method="post">
+    <form action="{{url_for('adminlogin')}}" method="post">
         ユーザ名:<input type="text" name="username" value="{{data.user_name if data is defined else ''}}"><br>
         パスワード:<input type="password" name="password" value="{{data.password if data is defined else ''}}"><br>
         <button type="submit">ログイン</button>
     </form>
-    <a href="{{url_for('register_form')}}">新規の方はこちら</a>
-    <a href="{{url_for('mypage')}}">ログインしないで利用する</a>
-    <a href="{{url_for('admin')}}">管理者用</a>
 
     </body>
 </html>

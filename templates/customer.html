@@ -118,14 +118,13 @@
 </head>
 <body>
     <header>
-        <h1>管理者用ページ</h1>
+        <h1>SHOP</h1>
         <nav>
             <ul>
                 <li><a href="{{url_for('mypage')}}">ホーム</a></li>
                 <li><a href="{{url_for('login')}}">会員登録・ログイン</a></li>
-                <li><a href="{{url_for('list_products')}}">一覧</a></li>
+                <li><a href="{{url_for('list')}}">一覧</a></li>
                 <li><a href="{{url_for('indexmail')}}">お問い合わせ</a></li>
-                <li><a href="{{url_for('add_product')}}">商品登録</a></li>
                 <a href="{{url_for('cart')}}" class="cart-link">
                     <img src="static/img/cart.jpg" alt="写真">
                 </a>

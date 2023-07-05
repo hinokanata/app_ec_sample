@@ -46,11 +46,7 @@
                 <td>{{ book[1] }}</td>
                 <td>{{ book[2] }}</td>
                 <td>{{ book[3] }}</td>
-                <td>
-                    <form action="{{ url_for('delete_product', book_id=book[3]) }}" method="POST">
-                        <button type="submit">削除</button>
-                    </form>
-                </td>
+
             </tr>
             {% endfor %}
         </tbody>
