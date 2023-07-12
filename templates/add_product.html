@@ -44,6 +44,9 @@
       サイズ：<input type="text" name="author"><br>
       説明：<input type="text" name="publisher"><br>
       金額：<input type="number" name="pages"><br>
+      <p>アップロードするファイルを選択してください。</p>
+      <form action="{{url_for('uploads')}}" method="POST" enctype="multipart/form-date">
+      <input type="file" name="file"><br>
       <button type="submit">登録</button>
     </form>
 </body>

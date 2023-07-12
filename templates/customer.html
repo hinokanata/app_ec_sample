@@ -123,7 +123,7 @@
             <ul>
                 <li><a href="{{url_for('mypage')}}">ホーム</a></li>
                 <li><a href="{{url_for('login')}}">会員登録・ログイン</a></li>
-                <li><a href="{{url_for('list')}}">一覧</a></li>
+                <li><a href="{{url_for('list_products')}}">一覧</a></li>
                 <li><a href="{{url_for('indexmail')}}">お問い合わせ</a></li>
                 <a href="{{url_for('cart')}}" class="cart-link">
                     <img src="static/img/cart.jpg" alt="写真">
@@ -136,7 +136,7 @@
         <section>
             <h2>おすすめ</h2>
             <div class="product">
-                <img src="static/img/1_0_1.jpg" alt="Tシャツ">
+                <img src="{{url_for('start', filename=name)}}" alt="no image">
                 <h3>Tシャツ</h3>
                 <p>商品の説明や詳細など</p>
                 <button>詳細を見る</button>
@@ -148,59 +148,7 @@
                     </form>
                 </form>
             </div>
-            <div class="product">
-                <img src="product2.jpg" alt="商品2">
-                <h3>商品2</h3>
-                <p>商品の説明や詳細など</p>
-                <button>詳細を見る</button>
-                <form action="{{ url_for('add_to_cart') }}" method="post">
-                    <input type="hidden" name="product_id" value="1">
-                    <button type="submit">カートに追加</button>
-                </form>
-            </div>
-            <div class="product">
-                <img src="product3.jpg" alt="商品3">
-                <h3>商品3</h3>
-                <p>商品の説明や詳細など</p>
-                <button>詳細を見る</button>
-                <form action="{{ url_for('add_to_cart') }}" method="post">
-                    <input type="hidden" name="product_id" value="1">
-                    <button type="submit">カートに追加</button>
-                </form>
-            </div>
-        </section>
-        <section>
-            <h2>新着商品</h2>
-            <div class="product">
-                <img src="product4.jpg" alt="商品4">
-                <h3>商品4</h3>
-                <p>商品の説明や詳細など</p>
-                <button>詳細を見る</button>
-                <form action="{{ url_for('add_to_cart') }}" method="post">
-                    <input type="hidden" name="product_id" value="1">
-                    <button type="submit">カートに追加</button>
-                </form>
-            </div>
-            <div class="product">
-                <img src="product5.jpg" alt="商品5">
-                <h3>商品5</h3>
-                <p>商品の説明や詳細など</p>
-                <button>詳細を見る</button>
-                <form action="{{ url_for('add_to_cart') }}" method="post">
-                    <input type="hidden" name="product_id" value="1">
-                    <button type="submit">カートに追加</button>
-                </form>
-            </div>
-            <div class="product">
-                <img src="product6.jpg" alt="商品6">
-                <h3>商品6</h3>
-                <p>商品の説明や詳細など</p>
-                <button>詳細を見る</button>
-                <form action="{{ url_for('add_to_cart') }}" method="post">
-                    <input type="hidden" name="product_id" value="1">
-                    <button type="submit">カートに追加</button>
-                </form>
-            </div>
+           
         </section>
     </main>
     <footer>
