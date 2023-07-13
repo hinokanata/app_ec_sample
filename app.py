@@ -40,7 +40,24 @@ def login():
             'password': password
         }
         return render_template('index.html', error=error, data=input_data)
+    
+@app.route('/cus', methods=['POST'])
+def cus():
+    user_name = request.form.get('username')
+    password = request.form.get('password')
 
+    if db.login(user_name, password):
+        session['user'] = True
+        session.permanent = True
+        app.permanent_session_lifetime = timedelta(hours=1)
+        return redirect(url_for('customer'))
+    else:
+        error = 'ログインに失敗しました。'
+        input_data = {
+            'user_name': user_name,
+            'password': password
+        }
+        return render_template('index.html', error=error, data=input_data)
 
 @app.route('/logout')
 def logout():
@@ -121,28 +138,38 @@ def customer():
 
 @app.route('/add_to_cart', methods=['POST'])
 def add_to_cart():
-    if request.method == 'POST':
-        product_id = request.form['product_id']
-        
-        return redirect(url_for('view_cart'))
-    else:
-        return redirect(url_for('index'))
+    if 'cart' not in session:
+        session['cart'] = []
+
+    product = {
+        'title': request.form.get('product_name'),
+        'size': request.form.get('product_size'),
+        'pages': request.form.get('product_pages')
+    }
+
+    session['cart'].append(product)
+
+    return redirect(url_for('view_cart'))
 
 
 @app.route('/cart')
 def view_cart():
-    
-    return render_template('cart.html')
+    if 'cart' in session:
+        cart_items = session['cart']
+    else:
+        cart_items = []
+
+    return render_template('cart.html', cart_items=cart_items)
 
 
 @app.route('/remove_from_cart', methods=['POST'])
 def remove_from_cart():
-    if request.method == 'POST':
-        product_id = request.form['product_id']
-        
-        return redirect(url_for('view_cart'))
-    else:
-        return redirect(url_for('index'))
+    if 'cart' in session and 'product_index' in request.form:
+        product_index = int(request.form['product_index'])
+        if 0 <= product_index < len(session['cart']):
+            del session['cart'][product_index]
+
+    return redirect(url_for('view_cart'))
 
 
 @app.route('/register_exee', methods=['POST'])
@@ -156,28 +183,49 @@ def register_exee():
     return render_template('list_products.html')
 
 
-@app.route('/list_products')
+@app.route('/list_products', methods=['GET'])
 def list_products():
-    rows = db.select_all_books()
-    return render_template('list_products.html', books=rows)
+    keyword = request.args.get('keyword', '')  
 
+    rows = db.select_all_books()
+    if keyword:
+        filtered_books = []
+        for book in rows:
+            if keyword in book[0]:  
+                filtered_books.append(book)
+        return render_template('list_products.html', books=filtered_books, keyword=keyword)
+    else:
+        return render_template('list_products.html', books=rows)
+
+@app.route('/list_admin', methods=['GET'])
+def list_admin():
+    keyword = request.args.get('keyword', '')  
+
+    rows = db.select_all_books()
+    if keyword:
+        filtered_books = []
+        for book in rows:
+            if keyword in book[0]:  
+                filtered_books.append(book)
+        return render_template('list_products.html', books=filtered_books, keyword=keyword)
+    else:
+        return render_template('list_products.html', books=rows)
 
 
 @app.route('/uploads', methods=['POST'])
 def uploads():
     if 'file' not in request.files:
-        return redirect(url_for('cart'))
+        return redirect(url_for('view_cart'))
 
     file = request.files['file']
     if file.filename == '':
-        return redirect(url_for('cart'))
+        return redirect(url_for('view_cart'))
 
     name = secure_filename(file.filename)
 
     file.save(os.path.join(UPLOAD_FOLDER, name))
 
     return render_template('customer.html', name='images/' + name)
-
 
 if __name__ == '__main__':
     app.run(debug=True)

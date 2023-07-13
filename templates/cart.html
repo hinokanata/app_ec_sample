@@ -17,57 +17,63 @@
             color: #333;
         }
 
-        ul {
-            list-style-type: none;
-            padding: 0;
+        table {
+            width: 100%;
+            border-collapse: collapse;
         }
 
-        li {
-            background-color: #fff;
-            border-radius: 5px;
-            padding: 10px;
-            margin-bottom: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
         }
 
-        form {
-            display: inline;
-            margin-left: 10px;
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
         }
 
-        button {
-            background-color: #ff5555;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            padding: 5px 10px;
-            cursor: pointer;
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
         }
 
-        a {
+        .back-button {
             display: block;
             text-align: center;
             margin-top: 20px;
             color: #333;
             text-decoration: none;
         }
-
-
     </style>
 </head>
 <body>
-
     <h1>カート</h1>
-    <ul>
-        {% for item in cart_items %}
-            <li>商品ID: {{ item }}
-                <form action="{{ url_for('remove_from_cart') }}" method="post">
-                    <input type="hidden" name="product_id" value="{{ item }}">
-                    <button type="submit">削除</button>
-                </form>
-            </li>
-        {% endfor %}
-    </ul>
-    <a href="{{url_for('mypage')}}">戻る</a>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>商品名</th>
+                <th>サイズ</th>
+                <th>値段</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart_items %}
+            <tr>
+                <td>{{ item['title'] }}</td>
+                <td>{{ item['size'] }}</td>
+                <td>{{ item['pages'] }}</td>
+                <td>
+                    <form action="{{ url_for('remove_from_cart') }}" method="post">
+                        <input type="hidden" name="product_id" value="{{ item['product_id'] }}">
+                        <button type="submit">削除</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a class="back-button" href="{{ url_for('customer') }}">戻る</a>
 </body>
 </html>

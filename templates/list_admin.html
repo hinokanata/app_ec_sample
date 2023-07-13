@@ -110,7 +110,8 @@
                     <form action="{{ url_for('add_to_cart') }}" method="post">
                         <input type="hidden" name="product_name" value="{{ book[0] }}">
                         <input type="hidden" name="product_size" value="{{ book[1] }}">
-                        <button type="submit">カートに入れる</button>
+                        <input type="hidden" name="product_price" value="{{ book[3] }}">
+                        <button type="submit">カートに追加</button>
                     </form>
                 </td>
             </tr>

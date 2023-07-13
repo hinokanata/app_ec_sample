@@ -20,7 +20,7 @@
         }
         
         h1 {
-            font-size: 32px;
+            font-size: 30px;
             margin: 0;
             color: black;
         }
@@ -33,7 +33,7 @@
         
         nav ul li {
             display: inline;
-            margin-right: 10px;
+            margin-right: 40px;
         }
         
         nav ul li a {
@@ -121,11 +121,11 @@
         <h1>SHOP</h1>
         <nav>
             <ul>
-                <li><a href="{{url_for('mypage')}}">ホーム</a></li>
-                <li><a href="{{url_for('login')}}">会員登録・ログイン</a></li>
-                <li><a href="{{url_for('list_products')}}">一覧</a></li>
-                <li><a href="{{url_for('indexmail')}}">お問い合わせ</a></li>
-                <a href="{{url_for('cart')}}" class="cart-link">
+                <li><a href="{{url_for('customer')}}">Home</a></li>
+                <li><a href="{{url_for('index')}}">Login</a></li>
+                <li><a href="{{url_for('list_products')}}">Catalog page</a></li>
+                <li><a href="{{url_for('indexmail')}}">Contact</a></li>
+                <a href="{{url_for('view_cart')}}" class="cart-link">
                     <img src="static/img/cart.jpg" alt="写真">
                 </a>
             </ul>
@@ -136,7 +136,7 @@
         <section>
             <h2>おすすめ</h2>
             <div class="product">
-                <img src="{{url_for('start', filename=name)}}" alt="no image">
+                <img src="{{url_for('static', filename=name)}}" alt="no image">
                 <h3>Tシャツ</h3>
                 <p>商品の説明や詳細など</p>
                 <button>詳細を見る</button>
