@@ -82,6 +82,9 @@ def register_form():
 def admin():
     return render_template('admin.html')
 
+@app.route('/buy')
+def buy():
+    return render_template('buy.html')
 
 @app.route('/register_exe', methods=['POST'])
 def register_exe():
@@ -130,7 +133,6 @@ def navigateSend():
 def add_product():
     return render_template('add_product.html')
 
-
 @app.route('/customer')
 def customer():
     return render_template('customer.html')
@@ -151,6 +153,13 @@ def add_to_cart():
 
     return redirect(url_for('view_cart'))
 
+@app.route('/purchase', methods=['POST'])
+def purchase():
+    return redirect(url_for('buyend'))
+
+@app.route('/buyend')
+def buyend():
+    return render_template('buyend.html')
 
 @app.route('/cart')
 def view_cart():
@@ -207,9 +216,9 @@ def list_admin():
         for book in rows:
             if keyword in book[0]:  
                 filtered_books.append(book)
-        return render_template('list_products.html', books=filtered_books, keyword=keyword)
+        return render_template('list_admin.html', books=filtered_books, keyword=keyword)
     else:
-        return render_template('list_products.html', books=rows)
+        return render_template('list_admin.html', books=rows)
 
 
 @app.route('/uploads', methods=['POST'])
@@ -226,6 +235,27 @@ def uploads():
     file.save(os.path.join(UPLOAD_FOLDER, name))
 
     return render_template('customer.html', name='images/' + name)
+
+@app.route('/remove_product', methods=['POST'])
+def remove_product():
+    if 'user' not in session:
+        return redirect(url_for('index'))
+
+    product_id = request.form.get('product_id')
+
+    if product_id is not None:
+        try:
+            product_id = int(product_id)  
+            print("Product ID to be deleted:", product_id)
+            db.remove_product(product_id)
+            print("Product deleted successfully!")
+        except (ValueError, TypeError):
+            print("Invalid product_id:", product_id)
+        except Exception as e:
+            print("Error deleting product:", str(e))
+
+    return redirect(url_for('list_admin'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)

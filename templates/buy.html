@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>購入画面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+    
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+    
+        form {
+            margin-top: 20px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+    
+        input[type="text"],
+        textarea,
+        input[type="tel"],
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+    
+        input[type="tel"] {
+            appearance: none;
+            -moz-appearance: textfield;
+            -webkit-appearance: textfield;
+        }
+    
+        input[type="tel"]::-webkit-inner-spin-button,
+        input[type="tel"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    
+        .purchase-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    
+        .back-button {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+            text-decoration: none;
+        }
+    </style>
+    
+    
+</head>
+<body>
+    <h1>購入画面</h1>
+    
+    <form action="/purchase" method="post">
+        <label for="name">名前:</label>
+        <input type="text" id="name" name="name" required>
+        
+        <label for="address">住所:</label>
+        <textarea id="address" name="address" required></textarea>
+        
+        <label for="phoneNumber">電話番号:</label>
+        <input type="tel" id="phoneNumber" name="phoneNumber" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+        <small>電話番号は000-0000-0000の形式で入力してください。</small>
+        
+        <label for="payment">支払い方法:</label>
+        <select id="payment" name="payment" required>
+            <option value="credit_card">クレジットカード</option>
+            <option value="PayPay">PayPay</option>
+            <option value="cash">現金</option>
+        </select>
+    
+        <button class="purchase-button" type="submit">購入する</button>   
+     </form>
+    
+
+
+    <a class="back-button" href="{{ url_for('view_cart') }}">カートに戻る</a>
+</body>
+</html>

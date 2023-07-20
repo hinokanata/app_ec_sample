@@ -6,10 +6,6 @@ connection = psycopg2.connect(user='postgres',
                               host='localhost',
                               database='postgres')
 
-def get_connection():
-    url = os.environ['DATABASE_URL']
-    connection = psycopg2.connect(url)
-    return connection
 
 def get_salt():
     charset = string.ascii_letters + string.digits
@@ -101,3 +97,14 @@ def insert_book(title, author, publisher, pages):
     cursor.close()
     connection.close()
     
+def remove_product(product_id):
+    connection = get_connection()
+    cursor = connection.cursor()
+    
+    sql = 'DELETE FROM books_sample WHERE id = %s'
+    
+    cursor.execute(sql, (product_id,))
+    connection.commit()
+    
+    cursor.close()
+    connection.close()
