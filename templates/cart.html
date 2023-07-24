@@ -54,27 +54,24 @@
             <tr>
                 <th>商品名</th>
                 <th>サイズ</th>
-                <th>値段</th>
                 <th></th>
             </tr>
-        </thead>
-        <tbody>
-            {% for item in cart_items %}
-            <tr>
-                <td>{{ item['title'] }}</td>
-                <td>{{ item['size'] }}</td>
-                <td>{{ item['pages'] }}</td>
-                <td>
-                    <form action="{{ url_for('remove_from_cart') }}" method="post">
-                        <input type="hidden" name="product_id" value="{{ item['product_id'] }}">
-                        <button type="submit">削除</button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
+            <tbody>
+                {% for index, item in cart_items %}
+                <tr>
+                    <td>{{ item['title'] }}</td>
+                    <td>{{ item['size'] }}</td>
+                    <td>
+                        <form action="{{ url_for('remove_from_cart') }}" method="post">
+                            <input type="hidden" name="product_index" value="{{ index }}">
+                            <button type="submit">削除</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
     </table>
-    <a class="back-button" href="{{ url_for('customer') }}">戻る</a>
+    <a class="back-button" href="{{ url_for('list_products') }}">戻る</a>
     <a class="back-button" href="{{ url_for('buy') }}">購入画面へ進む</a>
 </body>
 </html>

@@ -50,7 +50,7 @@ def cus():
         session['user'] = True
         session.permanent = True
         app.permanent_session_lifetime = timedelta(hours=1)
-        return redirect(url_for('customer'))
+        return redirect(url_for('customer_list'))
     else:
         error = 'ログインに失敗しました。'
         input_data = {
@@ -133,9 +133,9 @@ def navigateSend():
 def add_product():
     return render_template('add_product.html')
 
-@app.route('/customer')
-def customer():
-    return render_template('customer.html')
+@app.route('/customer_list', methods=['GET'])
+def customer_list():
+    return render_template('customer_list.html')
 
 
 @app.route('/add_to_cart', methods=['POST'])
@@ -165,10 +165,12 @@ def buyend():
 def view_cart():
     if 'cart' in session:
         cart_items = session['cart']
+        cart_items_with_index = enumerate(cart_items) 
     else:
         cart_items = []
+        cart_items_with_index = []
 
-    return render_template('cart.html', cart_items=cart_items)
+    return render_template('cart.html', cart_items=cart_items_with_index)
 
 
 @app.route('/remove_from_cart', methods=['POST'])
@@ -180,7 +182,6 @@ def remove_from_cart():
 
     return redirect(url_for('view_cart'))
 
-
 @app.route('/register_exee', methods=['POST'])
 def register_exee():
     title = request.form.get('title')
@@ -188,8 +189,10 @@ def register_exee():
     publisher = request.form.get('publisher')
     pages = request.form.get('pages')
 
+    db.insert_book(title, author, publisher, pages)  
 
-    return render_template('list_products.html')
+    return redirect(url_for('list_admin'))  
+
 
 
 @app.route('/list_products', methods=['GET'])
@@ -205,6 +208,7 @@ def list_products():
         return render_template('list_products.html', books=filtered_books, keyword=keyword)
     else:
         return render_template('list_products.html', books=rows)
+
 
 @app.route('/list_admin', methods=['GET'])
 def list_admin():
@@ -234,7 +238,7 @@ def uploads():
 
     file.save(os.path.join(UPLOAD_FOLDER, name))
 
-    return render_template('customer.html', name='images/' + name)
+    return render_template('customer_list.html', name='images/' + name)
 
 @app.route('/remove_product', methods=['POST'])
 def remove_product():
@@ -243,11 +247,13 @@ def remove_product():
 
     product_id = request.form.get('product_id')
 
+    print("Received Product ID:", product_id)  # Add this line to check the received product_id
+
     if product_id is not None:
         try:
-            product_id = int(product_id)  
+            product_id = int(product_id) 
             print("Product ID to be deleted:", product_id)
-            db.remove_product(product_id)
+            db.remove_product(product_id)  
             print("Product deleted successfully!")
         except (ValueError, TypeError):
             print("Invalid product_id:", product_id)
@@ -255,7 +261,6 @@ def remove_product():
             print("Error deleting product:", str(e))
 
     return redirect(url_for('list_admin'))
-
 
 if __name__ == '__main__':
     app.run(debug=True)

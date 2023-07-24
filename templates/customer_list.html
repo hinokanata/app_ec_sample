@@ -20,7 +20,7 @@
         }
         
         h1 {
-            font-size: 30px;
+            font-size: 32px;
             margin: 0;
             color: black;
         }
@@ -121,7 +121,7 @@
         <h1>SHOP</h1>
         <nav>
             <ul>
-                <li><a href="{{url_for('customer')}}">Home</a></li>
+                <li><a href="{{url_for('customer_list')}}">Home</a></li>
                 <li><a href="{{url_for('index')}}">Login</a></li>
                 <li><a href="{{url_for('list_products')}}">Catalog page</a></li>
                 <li><a href="{{url_for('indexmail')}}">Contact</a></li>
@@ -136,7 +136,7 @@
         <section>
             <h2>おすすめ</h2>
             <div class="product">
-                <img src="{{url_for('static', filename=name)}}" alt="no image">
+                <img src="static/img/1_0_1.jpg" alt="Tシャツ">
                 <h3>Tシャツ</h3>
                 <p>商品の説明や詳細など</p>
                 <button>詳細を見る</button>
@@ -144,11 +144,63 @@
                     <input type="hidden" name="product_id" value="1">
                     <form action="{{ url_for('add_to_cart') }}" method="post">
                         <input type="hidden" name="product_id" value="1">
-                        <button type="submit">カートに追加</button>
+
                     </form>
                 </form>
             </div>
+            <div class="product">
+                <img src="product2.jpg" alt="商品2">
+                <h3>商品2</h3>
+                <p>商品の説明や詳細など</p>
+                <button>詳細を見る</button>
+                <form action="{{ url_for('add_to_cart') }}" method="post">
+                    <input type="hidden" name="product_id" value="1">
+  
+                </form>
+            </div>
+            <div class="product">
+                <img src="product3.jpg" alt="商品3">
+                <h3>商品3</h3>
+                <p>商品の説明や詳細など</p>
+                <button>詳細を見る</button>
+                <form action="{{ url_for('add_to_cart') }}" method="post">
+                    <input type="hidden" name="product_id" value="1">
+  
+                </form>
+            </div>
+        </section>
+        <section>
+            <h2>新着商品</h2>
+            <div class="product">
+                <img src="product4.jpg" alt="商品4">
+                <h3>商品4</h3>
+                <p>商品の説明や詳細など</p>
+                <button>詳細を見る</button>
+                <form action="{{ url_for('add_to_cart') }}" method="post">
+                    <input type="hidden" name="product_id" value="1">
            
+                </form>
+            </div>
+            <div class="product">
+                <img src="product5.jpg" alt="商品5">
+                <h3>商品5</h3>
+                <p>商品の説明や詳細など</p>
+                <button>詳細を見る</button>
+                <form action="{{ url_for('add_to_cart') }}" method="post">
+                    <input type="hidden" name="product_id" value="1">
+                 
+                </form>
+            </div>
+            <div class="product">
+                <img src="product6.jpg" alt="商品6">
+                <h3>商品6</h3>
+                <p>商品の説明や詳細など</p>
+                <button>詳細を見る</button>
+                <form action="{{ url_for('add_to_cart') }}" method="post">
+                    <input type="hidden" name="product_id" value="1">
+                 
+                </form>
+            </div>
         </section>
     </main>
     <footer>

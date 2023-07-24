@@ -100,11 +100,14 @@ def insert_book(title, author, publisher, pages):
 def remove_product(product_id):
     connection = get_connection()
     cursor = connection.cursor()
-    
-    sql = 'DELETE FROM books_sample WHERE id = %s'
-    
-    cursor.execute(sql, (product_id,))
-    connection.commit()
-    
+
+    try:
+        sql = 'DELETE FROM books_sample WHERE id = %s'
+        cursor.execute(sql, (product_id,))
+        connection.commit()
+        print("Product deleted successfully!")
+    except Exception as e:
+        print("Error deleting product:", str(e))
+
     cursor.close()
     connection.close()

@@ -135,13 +135,14 @@
                 </td>
                 <td>
                     <form action="{{ url_for('remove_product') }}" method="post">
-                        <input type="hidden" name="product_id" value="{{ book[4] }}">
-                        <button class="delete-button" type="submit">削除</button> 
+                        <input type="hidden" name="product_id" value="{{ book[4] }}"> <!-- Check if 'book[4]' contains the product_id -->
+                        <button class="delete-button" type="submit">削除</button>
                     </form>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
+
     </table>
 </body>
 </html>
