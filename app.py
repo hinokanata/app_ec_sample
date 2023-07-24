@@ -247,7 +247,7 @@ def remove_product():
 
     product_id = request.form.get('product_id')
 
-    print("Received Product ID:", product_id)  # Add this line to check the received product_id
+    print("Received Product ID:", product_id)  
 
     if product_id is not None:
         try:
